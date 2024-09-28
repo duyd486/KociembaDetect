@@ -129,7 +129,6 @@ class Rubic_Cube():
         }
         self.check_state = []
         self.solved = False
-        self.speed = 30
 
     def reset_positions(self):
         self.positions = {'front': [], 'right': [], 'back': [], 'left': [], 'top': [], 'bottom': []}
@@ -285,7 +284,7 @@ class Rubic_Cube():
     def solution(self):
         solve(self.tiles)
     def solve(self):
-        self.speed = 300
+        self.dA = np.pi/2
         #gan dap an vao solve cua code ben kia
         values = solve(self.tiles)
         values = list(values.split(" "))
@@ -300,7 +299,8 @@ class Rubic_Cube():
             else:
                 self.moves.append(value)
     def step_solve(self):
-        self.speed = 30
+        #tra lai toc do xoay cham
+        self.dA = np.pi/40
         #ham khi duoc goi lan dau se tim loi giai, tu lan 2 se chi thuc hien cac buoc
         if self.firstCall:
             self.values = solve(self.tiles)
@@ -382,7 +382,8 @@ class Rubic_Cube():
                         values = detect_solve(self.state)
                         values = list(values.split(" "))
                         values.reverse()
-                        self.speed = 300
+                        #tang toc do xoay
+                        self.dA = np.pi/2
                         # print(values)
                         for value in values:
                             value = self.re_conv[value]
@@ -430,7 +431,7 @@ class Rubic_Cube():
         button(bind=self.step_solve, text='solve by step')
 
     def update(self):
-        rate(self.speed)
+        rate(30)
         self.animations()
         self.move()
     def start(self):
